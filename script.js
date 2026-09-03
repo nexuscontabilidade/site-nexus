@@ -56,13 +56,26 @@
       items.forEach(function (el) { io.observe(el); });
     }
 
-    /* contact form — front-end demo only (no backend wired) */
+    /* contact form — submits to Netlify Forms */
     var form = document.getElementById("contactForm");
     form.addEventListener("submit", function (e) {
       e.preventDefault();
       if (!form.checkValidity()) { form.reportValidity(); return; }
-      document.getElementById("formFields").style.display = "none";
-      document.getElementById("formOk").classList.add("show");
+
+      var body = new URLSearchParams(new FormData(form)).toString();
+      fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: body,
+      })
+        .then(function (res) {
+          if (!res.ok) throw new Error("submit failed");
+          document.getElementById("formFields").style.display = "none";
+          document.getElementById("formOk").classList.add("show");
+        })
+        .catch(function () {
+          alert("Não foi possível enviar agora. Tente novamente ou fale pelo WhatsApp.");
+        });
     });
 
     document.getElementById("year").textContent = new Date().getFullYear();

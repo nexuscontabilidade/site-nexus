@@ -325,7 +325,11 @@
           </ul>
         </div>
 
-        <form class="card reveal" id="contactForm" novalidate>
+        <form class="card reveal" id="contactForm" name="contato" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
+          <input type="hidden" name="form-name" value="contato" />
+          <p class="hp-field" aria-hidden="true">
+            <label>Não preencha se você é humano: <input name="bot-field" tabindex="-1" autocomplete="off" /></label>
+          </p>
           <div class="form-fields" id="formFields">
             <div class="form-row">
               <div class="field">
